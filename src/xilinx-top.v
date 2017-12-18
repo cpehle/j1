@@ -206,8 +206,9 @@ module top(
   reg io_wr_;
   reg [15:0] mem_addr_;
   reg [31:0] dout_;
-  always @(posedge fclk)
+  always_ff @(posedge fclk) begin
     {io_wr_, mem_addr_, dout_} <= {io_wr, mem_addr, dout};
+  end
 
   assign uart0_wr = io_wr_ & (mem_addr_ == 16'h0000);
   assign uart0_rd = io_wr_ & (mem_addr_ == 16'h0002);
